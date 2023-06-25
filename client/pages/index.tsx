@@ -3,6 +3,7 @@ import Image from "next/image";
 import { BsBell, BsBookmark, BsEnvelope, BsTwitter } from "react-icons/bs";
 import { BiHash, BiHomeCircle, BiMoney, BiUser } from "react-icons/bi";
 import { SlOptions } from "react-icons/sl";
+import { GoogleLogin } from "@react-oauth/google";
 
 import FeedCard from "@/components/FeedCard";
 
@@ -54,7 +55,7 @@ const sidebarMenuItems: TwitterSidebarButton[] = [
 
 export default function Home() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <div className="grid grid-cols-12 h-screen w-screen ">
         <div className="col-span-3 pt-1 ml-24 ">
           {/* Twitter logo */}
@@ -82,7 +83,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="col-span-5 border-r-[1px] border-l-[1px] h-screen overflow-scroll  border-gray-600">
+        <div className="col-span-5 border-r-[1px] border-l-[1px] h-screen  overflow-y-scroll overflow-hidden scrollbar-hide   border-gray-600">
           {/* Feed cards */}
           <FeedCard />
           <FeedCard />
@@ -95,7 +96,18 @@ export default function Home() {
           <FeedCard />
           <FeedCard />
         </div>
-        <div className="col-span-3"></div>
+        <div className="col-span-3 p-5">
+          <div className="p-5 bg-slate-700 rounded-lg">
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

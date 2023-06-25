@@ -18,6 +18,7 @@ const server_1 = require("@apollo/server");
 const express4_1 = require("@apollo/server/express4");
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
+const index_1 = require("./user/index");
 // Define an async function to initialize the server
 function initServer() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,14 +29,15 @@ function initServer() {
         // Define the GraphQL server configuration
         const graphqlServer = new server_1.ApolloServer({
             typeDefs: `
+
+        ${index_1.Users.types}
+
         type Query {
-            sayHello: String
+            ${index_1.Users.queries}
         }
     `,
             resolvers: {
-                Query: {
-                    sayHello: () => `Hello from the GraphQL server`,
-                },
+                Query: Object.assign({}, index_1.Users.resolvers.queries),
             },
         });
         // Start the GraphQL server
@@ -60,6 +62,3 @@ exports.initServer = initServer;
    - We add the Apollo Server middleware to the Express app using "app.use("/graphql", expressMiddleware(graphqlServer))".
    - Finally, we return the configured Express app from the "initServer" function.
 */
-// Adding comments to your code helps document its purpose and functionality,
-// making it easier for other developers to understand and maintain the code.
-// You can use single-line comments (//) or multi-line comments (/* */) to add comments in your code.
